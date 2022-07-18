@@ -25,7 +25,7 @@ import { isEqual } from '../../../../utils/is-equal.util';
   templateUrl: './order-details-form.component.html',
   styleUrls: ['./order-details-form.component.css'],
 })
-export class OrderProductFormComponent implements OnInit, OnDestroy {
+export class OrderDetailsFormComponent implements OnInit, OnDestroy {
   @Input() set doSubmit(doSubmit: void) {
     this.onSubmit();
   }
@@ -52,9 +52,7 @@ export class OrderProductFormComponent implements OnInit, OnDestroy {
       Validators.required,
     ]),
     poNumber: new FormControl<string | undefined>(undefined),
-    expectedStartDate: new FormControl<string | undefined>(undefined, [
-      Validators.required,
-    ]),
+    expectedStartDate: new FormControl<string | undefined>(undefined),
   };
 
   readonly detailsForm = new FormGroup(this.controls);

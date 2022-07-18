@@ -1,0 +1,37 @@
+<form [formGroup]="detailsForm" (ngSubmit)="onSubmit()">
+  <h4>Product Details</h4>
+  <label for="factoryId">factoryId: </label>
+  <input id="factoryId" type="text" formControlName="factoryId" />
+
+  <label for="factoryName">factoryName: </label>
+  <input id="factoryName" type="number" formControlName="factoryName" />
+
+  <label for="factoryAddress">factoryAddress: </label>
+  <input id="factoryAddress" type="text" formControlName="factoryAddress" />
+
+  <label for="factoryCountry">factoryCountry: </label>
+  <input id="factoryCountry" type="text" formControlName="factoryCountry" />
+
+  <label for="productionLineId">productionLineId: </label>
+  <input id="productionLineId" type="text" formControlName="productionLineId" />
+
+  <label for="productCode">productCode: </label>
+  <input id="productCode" type="text" formControlName="productCode" />
+
+  <label for="productDescription">productDescription: </label>
+  <input
+    id="productDescription"
+    type="text"
+    formControlName="productDescription"
+  />
+
+  <label for="poNumber">poNumber: </label>
+  <input id="poNumber" type="text" formControlName="poNumber" />
+
+  <label for="expectedStartDate">expectedStartDate: </label>
+  <input
+    id="expectedStartDate"
+    type="text"
+    formControlName="expectedStartDate"
+  />
+</form>
