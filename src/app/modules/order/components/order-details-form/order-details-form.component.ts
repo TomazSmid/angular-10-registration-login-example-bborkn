@@ -15,8 +15,10 @@ import {
 } from '@angular/forms';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { OrderDetails } from '../../../../models/OrderDetails';
+import { filterUndefined } from '../../../../utils/filter-undefined.util';
 import { isEqual } from '../../../../utils/is-equal.util';
 
 @Component({
@@ -29,8 +31,17 @@ export class OrderDetailsFormComponent implements OnInit, OnDestroy {
   @Input() set doSubmit(doSubmit: void) {
     this.onSubmit();
   }
+  @Input() set detailsControl(
+    detailsControl: FormControl<OrderDetails | undefined>
+  ) {
+    this.detailsControl$.next(detailsControl);
+  }
 
   @Output() submit: EventEmitter<OrderDetails | undefined> = new EventEmitter();
+
+  readonly detailsControl$ = new BehaviorSubject<
+    FormControl<OrderDetails | undefined>
+  >(undefined);
 
   // Comment generic type in oder to get specific values, uncomment to get key validation
   readonly controls /* : { [key in keyof OrderDetails]: AbstractControl } */ = {
@@ -67,6 +78,21 @@ export class OrderDetailsFormComponent implements OnInit, OnDestroy {
       .subscribe((formValues) =>
         this.submitForm(formValues, this.isFormValid())
       );
+
+    combineLatest([
+      this.detailsControl$.pipe(distinctUntilChanged(), filterUndefined()),
+      this.detailsForm.valueChanges,
+    ])
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: ([detailsControl, values]) => {
+          if (this.isFormValid()) {
+            detailsControl.setValue(values as OrderDetails);
+          } else {
+            detailsControl.setValue(undefined);
+          }
+        },
+      });
   }
 
   ngOnDestroy(): void {

@@ -21,7 +21,9 @@
     <button type="button" (click)="addDetails$.next(false)">
       Remove details
     </button>
-    <order-details-form></order-details-form>
+    <order-details-form
+      [detailsControl]="controls.orderDetails"
+    ></order-details-form>
   </div>
 
   <br />
