@@ -1,0 +1,28 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+  <h3>Product</h3>
+  <label for="gtin">gtin: </label>
+  <input id="gtin" type="text" formControlName="gtin" />
+
+  <label for="quantity">quantity: </label>
+  <input id="quantity" type="number" formControlName="quantity" />
+
+  <label for="sttemplateIdate">templateId: </label>
+  <input id="templateId" type="text" formControlName="templateId" />
+
+  <label for="serialNumberType">serialNumberType: </label>
+  <input id="serialNumberType" type="text" formControlName="serialNumberType" />
+
+  <div formArrayName="serialNumbers">
+    <h4>Serial numbers</h4>
+    <button type="button" (click)="addSerialNumber()">
+      + Add serial number
+    </button>
+
+    <div *ngFor="let number of serialNumbers.controls; let i = index">
+      <!-- The repeated alias template -->
+      <label for="number-{{ i }}">serialNumber {{ i + 1 }} : </label>
+      <input id="number-{{ i }}" type="text" [formControlName]="i" />
+      <button type="button" (click)="removeSerialNumber(i)">-</button>
+    </div>
+  </div>
+</form>
