@@ -3,3 +3,7 @@ label {
   margin: 0.5em 0;
   font-weight: bold;
 }
+
+.validation-message {
+  background-color: yellow;
+}

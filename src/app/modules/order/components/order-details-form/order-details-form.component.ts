@@ -111,6 +111,14 @@ export class OrderDetailsFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  getControlMessages(control: FormControl): string[] {
+    if (!control) {
+      return [];
+    }
+
+    return Object.keys(control.errors || {});
+  }
+
   private isFormValid(): boolean {
     return this.detailsForm.valid;
   }

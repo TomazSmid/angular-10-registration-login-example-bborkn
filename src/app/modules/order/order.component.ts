@@ -6,9 +6,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 import { BehaviorSubject } from 'rxjs';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { OrderProduct, OrderDetails } from '../../models';
 import { EmissionCmRequest } from '../../models/request/EmissionCmRequest';
+import { EmissionCmResponse } from '../../models/request/EmissionCmResponse';
+import { OrderService } from '../../services/order.service';
+import { AlertService } from '../../_services/alert.service';
 
 @Component({ templateUrl: 'order.component.html' })
 export class OrderComponent {
@@ -16,6 +21,12 @@ export class OrderComponent {
     new EventEmitter();
 
   readonly addDetails$ = new BehaviorSubject<boolean>(false);
+  readonly result$ = new BehaviorSubject<EmissionCmResponse | undefined>(
+    undefined
+  );
+  readonly resultString$ = this.result$.pipe(
+    map((r) => r && JSON.stringify(r, null, 4))
+  );
 
   // Comment generic type in oder to get specific values, uncomment to get key validation
   readonly controls /*: Omit<
@@ -32,6 +43,34 @@ export class OrderComponent {
 
   readonly cmForm = new FormGroup(this.controls);
 
+  constructor(
+    private orderService: OrderService,
+    private alertService: AlertService
+  ) {}
+
+  ngOnInit(): void {
+    this.submit
+      .asObservable()
+      .pipe(
+        untilDestroyed(this),
+        mergeMap((formValues) => this.orderService.orderRequest(formValues))
+      )
+      .subscribe({
+        next: (result) => {
+          this.result$.next(result);
+          this.alertService.success('success');
+        },
+        error: (err) => {
+          console.error('error response', err);
+          this.result$.next(undefined);
+          this.alertService.error(JSON.stringify(err, null, 2));
+        },
+      });
+  }
+
+  ngOnDestroy(): void {
+    // Used for untilDestroyed
+  }
   addProduct() {
     this.controls.products.push(
       new FormControl<OrderProduct | undefined>(undefined, [

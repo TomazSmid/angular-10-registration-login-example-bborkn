@@ -9,6 +9,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { EmissionCmResponse } from '../models/request/EmissionCmResponse';
 
 // array in local storage for registered users
 const usersKey = 'angular-10-registration-login-example-users';
@@ -28,8 +29,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       switch (true) {
         case url.endsWith('/users/authenticate') && method === 'POST':
           return authenticate();
-        case url.endsWith('/users') && method === 'GET':
-          return getUsers();
+        case url.endsWith('/api/v2/orders') && method === 'POST':
+          return cmResponse();
         case url.match(/\/users\/\d+$/) && method === 'GET':
           return getUserById();
         default:
@@ -45,9 +46,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       return ok(body);
     }
 
-    function getUsers() {
+    function cmResponse(): Observable<HttpResponse<EmissionCmResponse>> {
       if (!isLoggedIn()) return unauthorized();
-      return ok(users.map((x) => basicDetails(x)));
+      return ok({
+        omsId: body.omsId,
+        orderId: 'b55aa676-0683-11ed-b939-0242ac120002',
+        expectedCompletionTime: 50,
+      });
     }
 
     function getUserById() {

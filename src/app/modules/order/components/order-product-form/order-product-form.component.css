@@ -2,9 +2,8 @@ label {
   display: block;
   margin: 0.5em 0;
   font-weight: bold;
-  background-color: yellow;
 }
 
-.aa {
+.validation-message {
   background-color: yellow;
 }

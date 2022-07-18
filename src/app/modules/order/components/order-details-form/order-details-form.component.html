@@ -2,21 +2,57 @@
   <h4>Product Details</h4>
   <label for="factoryId">factoryId: </label>
   <input id="factoryId" type="text" formControlName="factoryId" />
+  <span
+    *ngFor="let message of getControlMessages(controls.factoryId)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="factoryName">factoryName: </label>
   <input id="factoryName" type="text" formControlName="factoryName" />
+  <span
+    *ngFor="let message of getControlMessages(controls.factoryName)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="factoryAddress">factoryAddress: </label>
   <input id="factoryAddress" type="text" formControlName="factoryAddress" />
+  <span
+    *ngFor="let message of getControlMessages(controls.factoryAddress)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="factoryCountry">factoryCountry: </label>
   <input id="factoryCountry" type="text" formControlName="factoryCountry" />
+  <span
+    *ngFor="let message of getControlMessages(controls.factoryCountry)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="productionLineId">productionLineId: </label>
   <input id="productionLineId" type="text" formControlName="productionLineId" />
+  <span
+    *ngFor="let message of getControlMessages(controls.productionLineId)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="productCode">productCode: </label>
   <input id="productCode" type="text" formControlName="productCode" />
+  <span
+    *ngFor="let message of getControlMessages(controls.productCode)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="productDescription">productDescription: </label>
   <input
@@ -24,9 +60,21 @@
     type="text"
     formControlName="productDescription"
   />
+  <span
+    *ngFor="let message of getControlMessages(controls.productDescription)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="poNumber">poNumber: </label>
   <input id="poNumber" type="text" formControlName="poNumber" />
+  <span
+    *ngFor="let message of getControlMessages(controls.poNumber)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 
   <label for="expectedStartDate">expectedStartDate: </label>
   <input
@@ -34,4 +82,10 @@
     type="text"
     formControlName="expectedStartDate"
   />
+  <span
+    *ngFor="let message of getControlMessages(controls.expectedStartDate)"
+    class="validation-message"
+  >
+    {{ message }}
+  </span>
 </form>
