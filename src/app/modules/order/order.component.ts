@@ -24,7 +24,7 @@ export class OrderComponent {
   readonly result$ = new BehaviorSubject<EmissionCmResponse | undefined>(
     undefined
   );
-  readonly resultString$ = this.result$.pipe(
+  readonly resultJson$ = this.result$.pipe(
     map((r) => r && JSON.stringify(r, null, 4))
   );
 

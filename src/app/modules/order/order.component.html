@@ -30,3 +30,7 @@
   <p>Complete the form to enable button.</p>
   <button type="submit" [disabled]="!cmForm.valid">Submit</button>
 </form>
+
+<div *ngIf="result$ | async" class="result">
+  <pre>{{ resultJson$ | async }}</pre>
+</div>

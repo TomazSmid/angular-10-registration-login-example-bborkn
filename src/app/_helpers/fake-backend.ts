@@ -30,10 +30,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         case url.endsWith('/users/authenticate') && method === 'POST':
           return authenticate();
         case url.endsWith('/api/v2/orders') && method === 'POST':
+        case url.endsWith('/api/v2/orders/') && method === 'POST':
           return cmResponse();
         case url.match(/\/users\/\d+$/) && method === 'GET':
           return getUserById();
         default:
+          console.warn('handleRoute default', request);
           // pass through any requests not handled above
           return next.handle(request);
       }
@@ -89,7 +91,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function isLoggedIn() {
-      return headers.get('Authorization') === 'Bearer fake-jwt-token';
+      return !!headers.get('clientToken');
     }
 
     function idFromUrl() {
