@@ -3,17 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@angular/animations": "^10.0.4",
-    "@angular/common": "^10.0.4",
-    "@angular/compiler": "^10.0.4",
-    "@angular/core": "^10.0.4",
-    "@angular/forms": "^10.0.4",
-    "@angular/platform-browser": "^10.0.4",
-    "@angular/platform-browser-dynamic": "^10.0.4",
-    "@angular/router": "^10.0.4",
+    "@angular/animations": "^14.0.4",
+    "@angular/common": "^14.0.4",
+    "@angular/compiler": "^14.0.4",
+    "@angular/core": "^14.0.4",
+    "@angular/forms": "^14.0.4",
+    "@angular/platform-browser": "^14.0.4",
+    "@angular/platform-browser-dynamic": "^14.0.4",
+    "@angular/router": "^14.0.4",
     "rxjs": "^6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "^0.10.3"
+    "zone.js": "^0.10.3",
+    "lodash": "^4.17.21",
+    "ngx-take-until-destroy": "^5.4.0"
   },
   "scripts": {
     "ng": "ng",
