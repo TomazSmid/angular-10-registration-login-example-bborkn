@@ -14,9 +14,6 @@
 
   <div formArrayName="serialNumbers">
     <h4>Serial numbers</h4>
-    <button type="button" (click)="addSerialNumber()">
-      + Add serial number
-    </button>
 
     <div *ngFor="let number of serialNumbers.controls; let i = index">
       <!-- The repeated alias template -->
@@ -24,5 +21,8 @@
       <input id="number-{{ i }}" type="text" [formControlName]="i" />
       <button type="button" (click)="removeSerialNumber(i)">-</button>
     </div>
+    <button type="button" (click)="addSerialNumber()">
+      + Add serial number
+    </button>
   </div>
 </form>

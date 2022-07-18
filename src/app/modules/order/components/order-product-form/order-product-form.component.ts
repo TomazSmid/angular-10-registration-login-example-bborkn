@@ -28,6 +28,10 @@ import { isEqual } from '../../../../utils/is-equal.util';
   styleUrls: ['.//order-product-form.component.css'],
 })
 export class OrderProductFormComponent implements OnInit, OnDestroy {
+  @Input() set doSubmit(doSubmit: void) {
+    this.onSubmit();
+  }
+
   @Output() submit: EventEmitter<OrderProduct | undefined> = new EventEmitter();
 
   // Comment generic type in oder to get specific values, uncomment to get key validation
@@ -75,7 +79,9 @@ export class OrderProductFormComponent implements OnInit, OnDestroy {
     this.controls.serialNumbers.removeAt(index);
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.submitForm(this.orderForm.value, this.isFormValid());
+  }
 
   submitForm(values: Partial<OrderProduct>, isValid: boolean) {
     if (isValid) {
