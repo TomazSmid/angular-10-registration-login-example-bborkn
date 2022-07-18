@@ -27,7 +27,7 @@ import { isEqual } from '../../../../utils/is-equal.util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'order-product-form',
   templateUrl: './order-product-form.component.html',
-  styleUrls: ['.//order-product-form.component.css'],
+  styleUrls: ['./order-product-form.component.css'],
 })
 export class OrderProductFormComponent implements OnInit, OnDestroy {
   @Input() set doSubmit(doSubmit: void) {
@@ -121,6 +121,14 @@ export class OrderProductFormComponent implements OnInit, OnDestroy {
     } else {
       this.submit.emit(undefined);
     }
+  }
+
+  getControlMessages(control: FormControl): string[] {
+    if (!control) {
+      return [];
+    }
+
+    return Object.keys(control.errors || {});
   }
 
   private isFormValid(): boolean {

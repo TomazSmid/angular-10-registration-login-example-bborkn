@@ -1,15 +1,39 @@
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
   <label for="gtin">gtin: </label>
   <input id="gtin" type="text" formControlName="gtin" />
+  <div
+    *ngFor="let message of getControlMessages(controls.gtin)"
+    class="validation-message"
+  >
+    {{ message }}
+  </div>
 
   <label for="quantity">quantity: </label>
   <input id="quantity" type="number" formControlName="quantity" />
+  <div
+    *ngFor="let message of getControlMessages(controls.quantity)"
+    class="validation-message"
+  >
+    {{ message }}
+  </div>
 
-  <label for="sttemplateIdate">templateId: </label>
+  <label for="templateId">templateId: </label>
   <input id="templateId" type="text" formControlName="templateId" />
+  <div
+    *ngFor="let message of getControlMessages(controls.templateId)"
+    class="validation-message"
+  >
+    {{ message }}
+  </div>
 
   <label for="serialNumberType">serialNumberType: </label>
   <input id="serialNumberType" type="text" formControlName="serialNumberType" />
+  <div
+    *ngFor="let message of getControlMessages(controls.serialNumberType)"
+    class="validation-message"
+  >
+    {{ message }}
+  </div>
 
   <div formArrayName="serialNumbers">
     <h4>Serial numbers</h4>
