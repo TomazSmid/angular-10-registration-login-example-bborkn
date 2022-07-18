@@ -42,9 +42,15 @@ export class OrderProductFormComponent implements OnInit, OnDestroy {
       Validators.maxLength(14),
     ]),
     quantity: new FormControl(undefined, [Validators.required]),
-    templateId: new FormControl(undefined, [Validators.required]),
-    serialNumberType: new FormControl(undefined, [Validators.required]),
-    serialNumbers: new FormArray([new FormControl('', [Validators.required])]),
+    templateId: new FormControl<string | undefined>(undefined, [
+      Validators.required,
+    ]),
+    serialNumberType: new FormControl<string | undefined>(undefined, [
+      Validators.required,
+    ]),
+    serialNumbers: new FormArray([
+      new FormControl<string>('', [Validators.required]),
+    ]),
   };
 
   readonly orderForm = new FormGroup(this.controls);
@@ -71,7 +77,7 @@ export class OrderProductFormComponent implements OnInit, OnDestroy {
 
   addSerialNumber() {
     this.controls.serialNumbers.push(
-      new FormControl('', [Validators.required])
+      new FormControl<string>('', [Validators.required])
     );
   }
 
