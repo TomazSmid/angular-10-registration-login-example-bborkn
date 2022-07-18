@@ -17,8 +17,10 @@ import {
 } from '@angular/forms';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { OrderProduct } from '../../../../models/OrderProduct';
+import { filterUndefined } from '../../../../utils/filter-undefined.util';
 import { isEqual } from '../../../../utils/is-equal.util';
 
 @Component({
@@ -31,8 +33,17 @@ export class OrderProductFormComponent implements OnInit, OnDestroy {
   @Input() set doSubmit(doSubmit: void) {
     this.onSubmit();
   }
+  @Input() set productControl(
+    productControl: FormControl<OrderProduct | undefined>
+  ) {
+    this.productControl$.next(productControl);
+  }
 
   @Output() submit: EventEmitter<OrderProduct | undefined> = new EventEmitter();
+
+  readonly productControl$ = new BehaviorSubject<
+    FormControl<OrderProduct | undefined>
+  >(undefined);
 
   // Comment generic type in oder to get specific values, uncomment to get key validation
   readonly controls /*: { [key in keyof OrderProduct]: AbstractControl } */ = {
@@ -59,12 +70,27 @@ export class OrderProductFormComponent implements OnInit, OnDestroy {
     this.orderForm.valueChanges
       .pipe(
         untilDestroyed(this),
-        distinctUntilChanged(isEqual), // Prevent loop
+        distinctUntilChanged(isEqual),
         debounceTime(300) // Save only after a period of inactivity
       )
       .subscribe((formValues) =>
         this.submitForm(formValues, this.isFormValid())
       );
+
+    combineLatest([
+      this.productControl$.pipe(distinctUntilChanged(), filterUndefined()),
+      this.orderForm.valueChanges,
+    ])
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: ([productControl, values]) => {
+          if (this.isFormValid()) {
+            productControl.setValue(values as OrderProduct);
+          } else {
+            productControl.setValue(undefined);
+          }
+        },
+      });
   }
 
   ngOnDestroy(): void {

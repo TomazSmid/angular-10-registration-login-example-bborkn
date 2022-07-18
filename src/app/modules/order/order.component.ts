@@ -27,9 +27,7 @@ export class OrderComponent {
         Validators.required,
       ]),
     ]),
-    orderDetails: new FormControl<OrderDetails | undefined>(undefined, [
-      Validators.required,
-    ]),
+    orderDetails: new FormControl<OrderDetails | undefined>(undefined),
   };
 
   readonly cmForm = new FormGroup(this.controls);
@@ -47,6 +45,7 @@ export class OrderComponent {
   }
 
   submitForm(values: Partial<EmissionCmRequest>, isValid: boolean) {
+    console.debug('submitForm', values, isValid);
     if (isValid) {
       this.submit.emit(values as EmissionCmRequest);
     } else {
