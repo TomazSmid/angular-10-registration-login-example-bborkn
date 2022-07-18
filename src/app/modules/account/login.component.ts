@@ -3,7 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService } from '../../_services';
+import { AlertService } from '../../_services';
+import { AuthService } from '../../services';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private accountService: AccountService,
+    private authService: AuthService,
     private alertService: AlertService
   ) {}
 
@@ -43,13 +44,14 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.accountService
+    this.authService
       .login(this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe({
         next: () => {
           // get return url from query parameters or default to home page
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.loading = false;
           this.router.navigateByUrl(returnUrl);
         },
         error: (error) => {

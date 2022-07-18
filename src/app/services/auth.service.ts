@@ -9,9 +9,13 @@ import { ClientAuth } from '../models/';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private _clientAuth$ = new BehaviorSubject<ClientAuth | undefined>(undefined);
+  private _clientAuth$ = new BehaviorSubject<ClientAuth | undefined>(
+    JSON.parse(localStorage.getItem('clientAuth'))
+  );
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {
+    this._clientAuth$.subscribe((ca) => console.debug('_clientAuth', ca));
+  }
 
   public get clientAuth(): ClientAuth {
     return this._clientAuth$.value;
@@ -20,10 +24,10 @@ export class AuthService {
     return this._clientAuth$.asObservable();
   }
 
-  login(omisId, token) {
+  login(omsId, token) {
     return this.http
       .post<ClientAuth>(`${environment.apiUrl}/users/authenticate`, {
-        omisId,
+        omsId,
         token,
       })
       .pipe(

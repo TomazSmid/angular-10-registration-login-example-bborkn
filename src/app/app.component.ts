@@ -5,11 +5,9 @@ import { ClientAuth } from './models';
 
 @Component({ selector: 'app', templateUrl: 'app.component.html' })
 export class AppComponent {
-  clientAuth: ClientAuth;
+  clientAuth$ = this.authService.clientAuth$;
 
-  constructor(private authService: AuthService) {
-    this.authService.clientAuth$.subscribe((x) => (this.clientAuth = x));
-  }
+  constructor(private authService: AuthService) {}
 
   logout() {
     this.authService.logout();

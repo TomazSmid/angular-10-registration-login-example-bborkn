@@ -5,9 +5,7 @@ import { AuthService } from '../../services';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
-  clientAuth: ClientAuth;
+  clientAuth$ = this.accountService.clientAuth$;
 
-  constructor(private accountService: AuthService) {
-    this.clientAuth = this.accountService.clientAuth;
-  }
+  constructor(private accountService: AuthService) {}
 }
